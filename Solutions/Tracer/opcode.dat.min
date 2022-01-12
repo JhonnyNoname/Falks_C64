@@ -1,0 +1,90 @@
+;---------------------------------------
+; opcd.dat
+;
+;     die liste enthaelt alle befehle
+;     des c64
+;
+; struktur:
+;        !byte a
+;        !text "bbb"
+;        !byte c,d,e,f,g,g
+;
+;   a   - opcode-nr.
+;
+;   bbb - mnemonic (3 byte text)
+;
+;   c   - adressierungs art
+;           1  akkumulator  - bef
+;           2  implizit     - bef
+;           3  unmittelbar  - bef #$nn
+;           4  absolut      - bef #$hhll
+;           5  absolut,x    - bef #$hhll,x
+;           6  absolut,y    - bef #$hhll,y
+;           7  zeropage     - bef $ll
+;           8  zeropage,x   - bef $ll,x
+;           9  zeropage,y   - bef $ll,y
+;          10  indirekt     - bef ($hhll)
+;          11  indirekt,x   - bef ($ll,x)
+;          12  indirekt,y   - bef ($ll),y
+;          13  relativ      - bef $hhll
+;
+;   d   - gruppe
+;           1  arithmetische operationen
+;           2  bitweises verschieben
+;           3  flag-befehl
+;           4  ladebefehle
+;           5  logische operationen
+;           6  speicherbefehle
+;           7  spezial-befehle
+;           8  sprungbefehle (bedingt)
+;           9  sprungbefehle (unbedingt)
+;          10  stack-befehle
+;          11  transfer-befehle
+;          12  vergleichs-operationen
+;          13  illegal-opcode
+;
+;   e     taktzyklen
+;
+;   f   - (il)legal opcode-kz
+;           0 -> legal / 1 -> illegal
+;
+;   gg  - reserve (noch nicht verwendet)
+;---------------------------------------
+opcddat
+
+;        !byte $aa
+;        !text "???"
+;        !byte aa,13,0      ;aa/grp/tz
+;        !byte $01,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  1 - gruppe  2    4
+
+         !byte $0a
+         !text "asl"
+         !byte 1,2,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+opcddatln
+         !byte $2a
+         !text "rol"
+         !byte 1,2,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $4a
+         !text "lsr"
+         !byte 1,2,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $6a
+         !text "ror"
+         !byte 1,2,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+
+OpcddatEnd
+opcdNoBef
+         ;ENDE-KZ
+         !byte $FF
+         !text "???"
+         !byte 14,14,0      ;AA/GRP/TZ
+         !byte $00,$FF,$FF  ;IOC / RES
+

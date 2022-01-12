@@ -1,0 +1,984 @@
+;---------------------------------------
+; opcd.dat
+;
+;     die liste enthaelt alle befehle
+;     des c64
+;
+; struktur:
+;        !byte a
+;        !text "bbb"
+;        !byte c,d,e,f,g,g
+;
+;   a   - opcode-nr.
+;
+;   bbb - mnemonic (3 byte text)
+;
+;   c   - adressierungs art
+;           1  akkumulator  - bef
+;           2  implizit     - bef
+;           3  unmittelbar  - bef #$nn
+;           4  absolut      - bef #$hhll
+;           5  absolut,x    - bef #$hhll,x
+;           6  absolut,y    - bef #$hhll,y
+;           7  zeropage     - bef $ll
+;           8  zeropage,x   - bef $ll,x
+;           9  zeropage,y   - bef $ll,y
+;          10  indirekt     - bef ($hhll)
+;          11  indirekt,x   - bef ($ll,x)
+;          12  indirekt,y   - bef ($ll),y
+;          13  relativ      - bef $hhll
+;
+;   d   - gruppe
+;           1  arithmetische operationen
+;           2  bitweises verschieben
+;           3  flag-befehl
+;           4  ladebefehle
+;           5  logische operationen
+;           6  speicherbefehle
+;           7  spezial-befehle
+;           8  sprungbefehle (bedingt)
+;           9  sprungbefehle (unbedingt)
+;          10  stack-befehle
+;          11  transfer-befehle
+;          12  vergleichs-operationen
+;          13  illegal-opcode
+;
+;   e     taktzyklen
+;
+;   f   - (il)legal opcode-kz
+;           0 -> legal / 1 -> illegal
+;
+;   gg  - reserve (noch nicht verwendet)
+;---------------------------------------
+opcddat
+
+;        !byte $aa
+;        !text "???"
+;        !byte aa,13,0      ;aa/grp/tz
+;        !byte $01,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  1 - gruppe  2    4
+
+         !byte $0a
+         !text "asl"
+         !byte 1,2,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+opcddatln
+         !byte $2a
+         !text "rol"
+         !byte 1,2,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $4a
+         !text "lsr"
+         !byte 1,2,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $6a
+         !text "ror"
+         !byte 1,2,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  2 - gruppe  1    4
+
+         !byte $c8
+         !text "iny"
+         !byte 2,1,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $e8
+         !text "inx"
+         !byte 2,1,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $88
+         !text "dey"
+         !byte 2,1,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $ca
+         !text "dex"
+         !byte 2,1,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  2 - gruppe  3    7
+
+         !byte $78
+         !text "sei"
+         !byte 2,3,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $f8
+         !text "sed"
+         !byte 2,3,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $38
+         !text "sec"
+         !byte 2,3,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $b8
+         !text "clv"
+         !byte 2,3,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $58
+         !text "cli"
+         !byte 2,3,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $d8
+         !text "cld"
+         !byte 2,3,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $18
+         !text "clc"
+         !byte 2,3,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  2 - gruppe  7    2
+
+         !byte $ea
+         !text "nop"
+         !byte 2,7,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $00
+         !text "brk"
+         !byte 2,7,7        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  2 - gruppe  9    2
+
+         !byte $60
+         !text "rts"
+         !byte 2,9,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $40
+         !text "rti"
+         !byte 2,9,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  2 - gruppe 10    4
+
+         !byte $28
+         !text "plp"
+         !byte 2,10,4       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $68
+         !text "pla"
+         !byte 2,10,4       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $08
+         !text "php"
+         !byte 2,10,3       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $48
+         !text "pha"
+         !byte 2,10,3       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  2 - gruppe 11    6
+
+         !byte $98
+         !text "tya"
+         !byte 2,11,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $9a
+         !text "txs"
+         !byte 2,11,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $8a
+         !text "txa"
+         !byte 2,11,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $ba
+         !text "tsx"
+         !byte 2,11,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $a8
+         !text "tay"
+         !byte 2,11,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $aa
+         !text "tax"
+         !byte 2,11,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  3 - gruppe  1    2
+
+         !byte $e9
+         !text "sbc"
+         !byte 3,1,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $69
+         !text "adc"
+         !byte 3,1,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  3 - gruppe  4    3
+
+         !byte $a9
+         !text "lda"
+         !byte 3,4,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $a2
+         !text "ldx"
+         !byte 3,4,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $a0
+         !text "ldy"
+         !byte 3,4,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  3 - gruppe  5    3
+
+         !byte $09
+         !text "ora"
+         !byte 3,5,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $49
+         !text "eor"
+         !byte 3,5,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $29
+         !text "and"
+         !byte 3,5,2        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  3 - gruppe 12    3
+
+         !byte $c9
+         !text "cmp"
+         !byte 3,12,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $c0
+         !text "cpy"
+         !byte 3,12,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $e0
+         !text "cpx"
+         !byte 3,12,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  4 - gruppe  1    4
+
+         !byte $ed
+         !text "sbc"
+         !byte 4,1,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $6d
+         !text "adc"
+         !byte 4,1,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $ee
+         !text "inc"
+         !byte 4,1,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $ce
+         !text "dec"
+         !byte 4,1,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  4 - gruppe  2    4
+
+         !byte $6e
+         !text "ror"
+         !byte 4,2,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $2e
+         !text "rol"
+         !byte 4,2,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $4e
+         !text "lsr"
+         !byte 4,2,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $0e
+         !text "asl"
+         !byte 4,2,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  4 - gruppe  4    3
+
+         !byte $ad
+         !text "lda"
+         !byte 4,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $ae
+         !text "ldx"
+         !byte 4,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $ac
+         !text "ldy"
+         !byte 4,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  4 - gruppe  5    3
+
+         !byte $0d
+         !text "ora"
+         !byte 4,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $4d
+         !text "eor"
+         !byte 4,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $2d
+         !text "and"
+         !byte 4,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  4 - gruppe  6    3
+
+         !byte $8d
+         !text "sta"
+         !byte 4,6,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $8e
+         !text "stx"
+         !byte 4,6,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $8c
+         !text "sty"
+         !byte 4,6,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  4 - gruppe  9    2
+
+         !byte $4c
+         !text "jmp"
+         !byte 4,9,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $20
+         !text "jsr"
+         !byte 4,9,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  4 - gruppe 12    4
+
+         !byte $cd
+         !text "cmp"
+         !byte 4,12,4       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $cc
+         !text "cpy"
+         !byte 4,12,4       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $ec
+         !text "cpx"
+         !byte 4,12,4       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $2c
+         !text "bit"
+         !byte 4,12,4       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  5 - gruppe  1    4
+
+         !byte $fd
+         !text "sbc"
+         !byte 5,1,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $7d
+         !text "adc"
+         !byte 5,1,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $fe
+         !text "inc"
+         !byte 5,1,7        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $de
+         !text "dec"
+         !byte 5,1,7        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  5 - gruppe  2    4
+
+         !byte $7e
+         !text "ror"
+         !byte 5,2,7        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $3e
+         !text "rol"
+         !byte 5,2,7        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $5e
+         !text "lsr"
+         !byte 5,2,7        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $1e
+         !text "asl"
+         !byte 5,2,7        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  5 - gruppe  4    2
+
+         !byte $bd
+         !text "lda"
+         !byte 5,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $bc
+         !text "ldy"
+         !byte 5,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  5 - gruppe  5    3
+
+         !byte $1d
+         !text "ora"
+         !byte 5,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $5d
+         !text "eor"
+         !byte 5,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $3d
+         !text "and"
+         !byte 5,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  5 - gruppe  6    1
+
+         !byte $9d
+         !text "sta"
+         !byte 5,6,5        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  5 - gruppe 12    1
+
+         !byte $dd
+         !text "cmp"
+         !byte 5,12,4       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  6 - gruppe  1    2
+
+         !byte $f9
+         !text "sbc"
+         !byte 6,1,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $79
+         !text "adc"
+         !byte 6,1,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  6 - gruppe  4    2
+
+         !byte $b9
+         !text "lda"
+         !byte 6,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $be
+         !text "ldx"
+         !byte 6,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  6 - gruppe  5    3
+
+         !byte $19
+         !text "ora"
+         !byte 6,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $59
+         !text "eor"
+         !byte 6,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $39
+         !text "and"
+         !byte 6,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  6 - gruppe  6    1
+
+         !byte $99
+         !text "sta"
+         !byte 6,6,5        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  6 - gruppe 12    1
+
+         !byte $d9
+         !text "cmp"
+         !byte 6,12,4       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  7 - gruppe  1    4
+
+         !byte $e5
+         !text "sbc"
+         !byte 7,1,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $65
+         !text "adc"
+         !byte 7,1,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $e6
+         !text "inc"
+         !byte 7,1,5        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $c6
+         !text "dec"
+         !byte 7,1,5        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  7 - gruppe  2    4
+
+         !byte $66
+         !text "ror"
+         !byte 7,2,5        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $26
+         !text "rol"
+         !byte 7,2,5        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $46
+         !text "lsr"
+         !byte 7,2,5        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $06
+         !text "asl"
+         !byte 7,2,5        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  7 - gruppe  4    3
+
+         !byte $a5
+         !text "lda"
+         !byte 7,4,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $a6
+         !text "ldx"
+         !byte 7,4,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $a4
+         !text "ldy"
+         !byte 7,4,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  7 - gruppe  5    3
+
+         !byte $05
+         !text "ora"
+         !byte 7,5,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $45
+         !text "eor"
+         !byte 7,5,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $25
+         !text "and"
+         !byte 7,5,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  7 - gruppe  6    3
+
+         !byte $85
+         !text "sta"
+         !byte 7,6,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $86
+         !text "stx"
+         !byte 7,6,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $84
+         !text "sty"
+         !byte 7,6,3        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  7 - gruppe 12    4
+
+         !byte $c5
+         !text "cmp"
+         !byte 7,12,3       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $c4
+         !text "cpy"
+         !byte 7,12,3       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $e4
+         !text "cpx"
+         !byte 7,12,3       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $24
+         !text "bit"
+         !byte 7,12,3       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  8 - gruppe  1    4
+
+         !byte $f5
+         !text "sbc"
+         !byte 8,1,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $75
+         !text "adc"
+         !byte 8,1,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $f6
+         !text "inc"
+         !byte 8,1,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $d6
+         !text "dec"
+         !byte 8,1,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  8 - gruppe  2    4
+
+         !byte $76
+         !text "ror"
+         !byte 8,2,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $36
+         !text "rol"
+         !byte 8,2,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $56
+         !text "lsr"
+         !byte 8,2,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $16
+         !text "asl"
+         !byte 8,2,6        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  8 - gruppe  4    2
+
+         !byte $b5
+         !text "lda"
+         !byte 8,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $b4
+         !text "ldy"
+         !byte 8,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  8 - gruppe  5    3
+
+         !byte $15
+         !text "ora"
+         !byte 8,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $55
+         !text "eor"
+         !byte 8,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $35
+         !text "and"
+         !byte 8,5,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  8 - gruppe  6    2
+
+         !byte $95
+         !text "sta"
+         !byte 8,6,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $94
+         !text "sty"
+         !byte 8,6,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  8 - gruppe 12    1
+
+         !byte $d5
+         !text "cmp"
+         !byte 8,12,4       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  9 - gruppe  4    1
+
+         !byte $b6
+         !text "ldx"
+         !byte 9,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart  9 - gruppe  6    1
+
+         !byte $96
+         !text "stx"
+         !byte 9,4,4        ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 10 - gruppe  9    1
+
+         !byte $6c
+         !text "jmp"
+         !byte 10,1,5       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 11 - gruppe  1    2
+
+         !byte $e1
+         !text "sbc"
+         !byte 11,1,6       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $61
+         !text "adc"
+         !byte 11,1,6       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 11 - gruppe  4    1
+
+         !byte $a1
+         !text "lda"
+         !byte 11,4,6       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 11 - gruppe  5    3
+
+         !byte $01
+         !text "ora"
+         !byte 11,5,6       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $41
+         !text "eor"
+         !byte 11,5,6       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $21
+         !text "and"
+         !byte 11,5,6       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+;---------------------------------------
+;adrart 11 - gruppe  6    1
+
+         !byte $81
+         !text "sta"
+         !byte 11,6,6       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 11 - gruppe 12    1
+
+         !byte $c1
+         !text "cmp"
+         !byte 11,12,6      ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 12 - gruppe  1    2
+
+         !byte $f1
+         !text "sbc"
+         !byte 12,1,5       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $71
+         !text "adc"
+         !byte 12,1,5       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 12 - gruppe  4    1
+
+         !byte $b1
+         !text "lda"
+         !byte 12,4,5       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 12 - gruppe  5    3
+
+         !byte $11
+         !text "ora"
+         !byte 12,5,5       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $51
+         !text "eor"
+         !byte 12,5,5       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $31
+         !text "and"
+         !byte 12,5,5       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 12 - gruppe  6    1
+
+         !byte $91
+         !text "sta"
+         !byte 12,6,6       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 12 - gruppe 12    1
+
+         !byte $d1
+         !text "cmp"
+         !byte 12,12,5      ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;adrart 13 - gruppe  8    8
+
+         !byte $70
+         !text "bvs"
+         !byte 13,8,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $50
+         !text "bvc"
+         !byte 13,8,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $10
+         !text "bpl"
+         !byte 13,8,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $d0
+         !text "bne"
+         !byte 13,8,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $30
+         !text "bmi"
+         !byte 13,8,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $f0
+         !text "beq"
+         !byte 13,8,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $b0
+         !text "bcs"
+         !byte 13,8,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+
+         !byte $90
+         !text "bcc"
+         !byte 13,8,2       ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
+;---------------------------------------
+;illegal opcodes
+
+         !byte $9c
+         !text "a11"
+         !byte 5,13,0       ;aa/grp/tz
+         !byte $01,$ff,$ff  ;ioc / res
+
+         !byte $9e
+         !text "a11"
+         !byte 6,13,0       ;aa/grp/tz
+         !byte $01,$ff,$ff  ;ioc / res
+;---------------------------------------
+         !byte $8b
+         !text "aax"
+         !byte 2,13,0       ;aa/grp/tz
+         !byte $01,$ff,$ff  ;ioc / res
+
+         !byte $87
+         !text "aax"
+         !byte 7,13,0       ;aa/grp/tz
+         !byte $01,$ff,$ff  ;ioc / res
+
+         !byte $97
+         !text "aax"
+         !byte 9,13,0       ;aa/grp/tz
+         !byte $01,$ff,$ff  ;ioc / res
+
+         !byte $8f
+         !text "aax"
+         !byte 4,13,0       ;aa/grp/tz
+         !byte $01,$ff,$ff  ;ioc / res
+
+         !byte $83
+         !text "aax"
+         !byte 11,13,0      ;aa/grp/tz
+         !byte $01,$ff,$ff  ;ioc / res
+;---------------------------------------
+         !byte $6b
+         !text "asr"
+         !byte 3,13,0       ;aa/grp/tz
+         !byte $01,$ff,$ff  ;ioc / res
+;---------------------------------------
+         !byte $4b
+         !text "arr"
+         !byte 3,13,0       ;aa/grp/tz
+         !byte $01,$ff,$ff  ;ioc / res
+;---------------------------------------
+         !byte $cb
+         !text "axs"
+         !byte 3,13,0       ;aa/grp/tz
+         !byte $01,$ff,$ff  ;ioc / res
+
+opcddatend
+opcdNoBef
+         ;ende-kz
+         !byte $ff
+         !text "???"
+         !byte 14,14,0      ;aa/grp/tz
+         !byte $00,$ff,$ff  ;ioc / res
